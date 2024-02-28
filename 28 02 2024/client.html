@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client</title>
+</head>
+<body>
+<h1>Socket Application</h1>
+<h3>People Online : <span id="count-box">0</span></h3>
+<h3>Seat avaiable : <span id="seat-box">0</span></h3>
+
+
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js" integrity="sha384-Gr6Lu2Ajx28mzwyVR8CFkULdCU7kMlZ9UthllibdOSo6qAiN+yXNHqtgdTvFXMT4" crossorigin="anonymous"></script>
+    <script>
+        const socket =io("http://localhost:4000/",{transports:['websocket']} )
+        socket.on('abc', (msg) =>{
+            console.log(msg)
+        })
+        socket.on('command', (msg) =>{
+            console.log(msg)
+        })
+        const seat =10;
+        const countbox =document.getElementById('count-box')
+        const seatbox =document.getElementById('seat-box')
+        socket.on('online-count', (count) =>{
+            console.log(count)
+            countbox.innerText=count
+            if(seat-count<=0){
+                seatbox.innerText=0
+            }else{
+                seatbox.innerText=seat-count
+            }
+        })
+    </script>
+</body>
+</html>
